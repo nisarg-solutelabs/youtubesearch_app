@@ -6,7 +6,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:my_flutter/data/model/search/id.dart';
 import 'package:my_flutter/data/model/search/search_snippet.dart';
-import 'package:my_flutter/data/model/search/serializer/serializers.dart';
+import 'package:my_flutter/data/model/serializer/serializers.dart';
 
 part 'search_item.g.dart';
 

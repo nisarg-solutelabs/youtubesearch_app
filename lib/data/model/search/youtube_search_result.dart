@@ -6,7 +6,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:my_flutter/data/model/search/search_item.dart';
-import 'package:my_flutter/data/model/search/serializer/serializers.dart';
+import 'package:my_flutter/data/model/serializer/serializers.dart';
 
 part 'youtube_search_result.g.dart';
 

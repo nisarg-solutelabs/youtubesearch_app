@@ -4,7 +4,7 @@ import 'dart:convert';
 
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:my_flutter/data/model/search/serializer/serializers.dart';
+import 'package:my_flutter/data/model/serializer/serializers.dart';
 
 part 'thumbnail.g.dart';
 
