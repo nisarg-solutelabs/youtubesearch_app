@@ -12,28 +12,45 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   }
 
   @override
-  // TODO: implement initialState
   SearchState get initialState => SearchState.initial();
 
   @override
   Stream<SearchState> mapEventToState(
       SearchState currentState, SearchEvent event) async* {
     if (event is SearchInitiated) {
-      if (event.query.isEmpty) {
-        yield SearchState.initial();
-      } else {
-        yield SearchState.loading();
+      yield* mapSearchInitiated(event);
+    } else if (event is FetchNextResultPage) {
+      yield* mapFetchNextResultPage();
+    }
+  }
 
-        try {
-          final searchResult =
-              await _youtubeRepository.searchVideos(event.query);
-          yield SearchState.success(searchResult);
-        } on YoutubeSearchError catch (e) {
-          yield SearchState.failture(e.message);
-        } on NoSearchResultsException catch (e) {
-          yield SearchState.failture(e.message);
-        }
+  Stream<SearchState> mapSearchInitiated(SearchInitiated event) async* {
+    if (event.query.isEmpty) {
+      yield SearchState.initial();
+    } else {
+      yield SearchState.loading();
+
+      try {
+        final searchResult = await _youtubeRepository.searchVideos(event.query);
+        yield SearchState.success(searchResult);
+      } on YoutubeSearchError catch (e) {
+        yield SearchState.failture(e.message);
+      } on NoSearchResultsException catch (e) {
+        yield SearchState.failture(e.message);
       }
+    }
+  }
+
+  Stream<SearchState> mapFetchNextResultPage() async* {
+    try {
+      final nextPageResults = await _youtubeRepository.fetchNextResultPage();
+      yield SearchState.success(currentState.searchResults + nextPageResults);
+    } on NoNextPageTokenException catch (_) {
+      yield currentState.rebuild((b) => b..hasReachedEndOfResults = true);
+    } on SearchNotInitiatedException catch (e) {
+      yield SearchState.failture(e.message);
+    } on YoutubeSearchError catch (e) {
+      yield SearchState.failture(e.message);
     }
   }
 }
