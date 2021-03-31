@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart' as kiwi;
 import 'package:my_flutter/data/model/search/search_item.dart';
 import 'package:my_flutter/data/model/search/search_snippet.dart';
+import 'package:my_flutter/ui/detail/detail_page.dart';
 import 'package:my_flutter/ui/search/search.dart';
 import 'package:my_flutter/ui/search/widget/centered_message.dart';
 import 'package:my_flutter/ui/search/widget/search_bar.dart';
@@ -102,10 +103,9 @@ class _SearchPageState extends State<SearchPage> {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (_) {
-            return Text('Detail Page');
-            /*return DetailPage(
+            return DetailPage(
               videoId: searchItem.id.videoId,
-            );*/
+            );
           }),
         );
       },
